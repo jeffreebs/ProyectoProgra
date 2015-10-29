@@ -23,19 +23,25 @@ public class Categorias {
     private String aleatoria;
     private int intentos; 
     private String categoria;
-    
-   
-    StringBuilder oculta = new StringBuilder();
-    StringBuilder errores = new StringBuilder("***********");
-    
-    public Categorias(char letra, String aleatoria, int intentos, String categoria) {
+    private String oculta;
+    StringBuffer ocultaMod;
+    StringBuilder errores= new StringBuilder("***********");
+  
+    public Categorias(char letra, String aleatoria, int intentos, String categoria, String oculta) {
         this.intentos=intentos;
         this.letra = letra;
         this.aleatoria = aleatoria;
         this.categoria= categoria;
+        this.oculta=oculta;
     }
 
-   
+    public String getOculta() {
+        return oculta;
+    }
+
+    public void setOculta(String oculta) {
+        this.oculta = oculta;
+    }
 
     public String getCategoria() {
         return categoria;
@@ -105,19 +111,29 @@ public class Categorias {
         return oculta;  
     }
     
-    public int Juego(String aleatoria, int intentos, StringBuilder oculta){
-     while(aleatoria.equals(oculta.toString())==false && intentos<11){
+    public int Juego(){
+     ocultaMod= new StringBuffer(oculta);
+        while(intentos<11 && aleatoria.equals(ocultaMod.toString())==false){
     System.out.print("Intenta advinar la palabra. Digite una letra: \r");
     letra = sc.next().charAt(0);
     if(aleatoria.indexOf(letra)>=0){
+        JOptionPane.showMessageDialog(null, "Acertaste");
         int posicion1= aleatoria.indexOf(letra);
         int posicion2= aleatoria.lastIndexOf(letra);
-        JOptionPane.showMessageDialog(null, "Acertaste");
-        oculta.setCharAt(posicion1, letra);
-        oculta.setCharAt(posicion2, letra);
+        ocultaMod.setCharAt(posicion1, letra);
+        ocultaMod.setCharAt(posicion2, letra);
+    }
+    else if(aleatoria.indexOf(letra)==-1){
+    errores.setCharAt(intentos, letra);
+    JOptionPane.showMessageDialog(null, "Incorrecto, intenta de nuevo");
+    intentos =intentos +1;
     }
     
-     }              
+     }
+    return intentos;
+    }
+    
+    }              
     
     
     
@@ -127,7 +143,7 @@ public class Categorias {
     
     
     
-}
+
 
     
 

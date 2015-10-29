@@ -21,17 +21,12 @@ public class Ahorcadogame {
         String aleatoria="";
         int intentos=0;
         String categoria="";
-        
-              
-        Categorias c1 = new Categorias (letra, aleatoria, intentos, categoria);
-        
-        categoria = JOptionPane.showInputDialog(null, "Elija la categoría que desea jugar: a.Super Héroes b.Partes del cuerpo c.Animales");
-    
-    
-      
-        
-        
-                        
+        String oculta = null;
+                      
+        Categorias c1 = new Categorias (letra, aleatoria, intentos, categoria, oculta);
+        c1.ElegirCategoria(categoria);
+        c1.ObtenerOculta(aleatoria);
+        c1.Juego();     
     }
     
 }
