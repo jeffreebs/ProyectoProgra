@@ -16,9 +16,9 @@ public class Ahorcadogame {
      */
     public static void main(String[] args) {
                   
-        Categorias c1 = new Categorias (superheroes, partesdelcuerpo, animales)
-        c1.ObtenerOculta(null);
-        c1.Juego();
+        Categorias primercategoria = new Categorias ("superheroes", "partesdelcuerpo", "animales");
+        primercategoria.ObtenerOculta(null);
+        primercategoria.Juego();
           
     }
 
