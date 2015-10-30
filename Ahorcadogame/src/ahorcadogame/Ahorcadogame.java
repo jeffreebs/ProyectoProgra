@@ -5,8 +5,6 @@
  */
 package ahorcadogame;
 
-import javax.swing.JOptionPane;
-
 /**
  *
  * @author Jeffree BS producciones
@@ -17,16 +15,11 @@ public class Ahorcadogame {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        char letra = 0;
-        String aleatoria="";
-        int intentos=0;
-        String categoria="";
-        String oculta = null;
-                      
-        Categorias c1 = new Categorias (letra, aleatoria, intentos, categoria, oculta);
-        c1.ElegirCategoria(categoria);
-        c1.ObtenerOculta(aleatoria);
-        c1.Juego();     
+                  
+        Categorias c1 = new Categorias (superheroes, partesdelcuerpo, animales)
+        c1.ObtenerOculta(null);
+        c1.Juego();
+          
     }
-    
+
 }
