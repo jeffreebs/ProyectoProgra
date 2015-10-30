@@ -13,140 +13,88 @@ import java.util.Scanner;
  * @author Jeffree BS Producciones
  */
 public class Categorias {
+
+    Scanner sc = new Scanner(System.in);  // se utiliza para escanear las letras que seran ingresadas
+    private String[] superheroes;      // se crea una variable llamada superheroes
+    private String[] partesdelcuerpo;  // se crea una variable llamda partesdelcuerpo
+    private String[] animales;         // se crea una variable llamdad animales
+    public char letra;            // se utiliza el char para 1 sola letra que se introducira en el juego
+    public String aleatoria;      // la String de tipo aleatoria se crea para  elegir al azar la palabra por adivinar
+    private int intentos;        // Muestra los intentos que quedan para perder
+    public String categoria;     // muestra las categorias de las palabras que quieren adivinar
+    public String oculta;        // esconde la palabra para que no sepan cual es
+    public int i = 0;
+    StringBuffer ocultaMod = new StringBuffer(this.ObtenerOculta(oculta)); //StringBuffer me permite modificar la palabra,utilizada para que este oculta
+    StringBuffer errores = new StringBuffer("***********"); // la palabra estara escondida mientras siga presentando errores
+   
     
-    Scanner sc = new Scanner(System.in);
+     public Categorias(String[] superheroes,String[]partesdelcuerpo,String[]animales) {
+        this.superheroes=superheroes;
+        this.partesdelcuerpo=partesdelcuerpo;
+        this.animales=animales;
+        // se crean los constructores
+    }
     
-    String [] superheroes={"BATMAN", "SUPERMAN", "IRONMAN", "HULK", "URSA", "GOKU", "VEGUETA", "SPIDERMAN"};
-    String [] partesdelcuerpo={"BRAZO", "PIERNA", "CABEZA", "PECHO", "TORSO", "ABDOMEN", "MANOS", "PIES"};
-    String [] animales={"GATO", "PERRO", "VACA", "TORO", "PAJARO", "TIGRE", "CABALLO", "LEON", "HORMIGA"};
-    private char letra;
-    private String aleatoria;
-    private int intentos; 
-    private String categoria;
-    private String oculta;
-    StringBuffer ocultaMod;
-    StringBuilder errores= new StringBuilder("***********");
+    
   
-    public Categorias(char letra, String aleatoria, int intentos, String categoria, String oculta) {
-        this.intentos=intentos;
-        this.letra = letra;
-        this.aleatoria = aleatoria;
-        this.categoria= categoria;
-        this.oculta=oculta;
-    }
-
-    public String getOculta() {
-        return oculta;
-    }
-
-    public void setOculta(String oculta) {
-        this.oculta = oculta;
-    }
-
-    public String getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
-    }
-    
-    public char getLetra() {
-        return letra;
-    }
-
-    public void setLetra(char letra) {
-        this.letra = letra;
-    }
-
-    public String getAleatoria() {
-        return aleatoria;
-    }
-
-    public void setAleatoria(String aleatoria) {
-        this.aleatoria = aleatoria;
-    }
-
-    public int getIntentos() {
-        return intentos;
-    }
-
-    public void setIntentos(int intentos) {
-        this.intentos = intentos;
-    }
-    
-    public int RandomA(String []animales ){
+    public int RandomA() {
         int posicion = (int) (Math.random() * animales.length);
         return posicion;
     }
 
-    public int RandomSP(String []superheroes){
-         int posicion = (int) (Math.random() * superheroes.length);
-         return posicion;
-    
-    }
-    public int RandomPC(String []partesdelcuerpo){
-        int posicion = (int)(Math.random() * partesdelcuerpo.length);
+    public int RandomSP() {
+        int posicion = (int) (Math.random() * superheroes.length);
         return posicion;
+
+    }
+
+    public int RandomPC() {
+        int posicion = (int) (Math.random() * partesdelcuerpo.length);
+        return posicion;
+    // metodos de Set and Get creados utilizando un int de Math.random para colocar la posicion de la letra
     }
     
-    public String ElegirCategoria(String categoria){
+
+    public String ElegirCategoria() { // se utiliza para elegir la categoria
         categoria = JOptionPane.showInputDialog(null, "Elija la categoría que desea jugar: a.Super Héroes b.Partes del cuerpo c.Animales");
-        if(categoria.equalsIgnoreCase("A")){
-            aleatoria= superheroes[this.RandomSP(superheroes)];
-        }else if(categoria.equalsIgnoreCase("B")){
-            aleatoria= partesdelcuerpo[this.RandomPC(partesdelcuerpo)];
-        }else{
-            aleatoria=animales[this.RandomA(animales)];     
-        }    
-        return aleatoria;
-    }
-    
-    public String ObtenerOculta(String oculta){
-        int i=0;
-        while(i<aleatoria.length()){
-        oculta= oculta + "*";
-        i=i+1;
+       // se utiliza este metodo para la impresion en la pantalla y elegir la categoria
+        if (categoria.equalsIgnoreCase("A")) { // utilizada para que ignore si es mayuscula o minuscula la letra que digitamos
+            aleatoria = superheroes[this.RandomSP()]; // al elegir la categoria superheroes solo busca palabras de esa categoria
+        } else if (categoria.equalsIgnoreCase("B")) {
+            aleatoria = partesdelcuerpo[this.RandomPC()];
+        } else {
+            aleatoria = animales[this.RandomA()];
         }
-        return oculta;  
+        return aleatoria; // hace que vuelva a empezar de nuevo el juego
     }
-    
-    public int Juego(){
-     ocultaMod= new StringBuffer(oculta);
-        while(intentos<11 && aleatoria.equals(ocultaMod.toString())==false){
-    System.out.print("Intenta advinar la palabra. Digite una letra: \r");
-    letra = sc.next().charAt(0);
-    if(aleatoria.indexOf(letra)>=0){
-        JOptionPane.showMessageDialog(null, "Acertaste");
-        int posicion1= aleatoria.indexOf(letra);
-        int posicion2= aleatoria.lastIndexOf(letra);
-        ocultaMod.setCharAt(posicion1, letra);
-        ocultaMod.setCharAt(posicion2, letra);
+
+    public String ObtenerOculta(String oculta) {
+
+        for (i = 0; i >= aleatoria.length(); i++) { // obtiene la palabra oculta y conjuga el tamaño de ella para campatir con la opcion que digiten
+            oculta = oculta + "*";
+        }
+        return oculta;// al fallar vuelve a retomar la palabra oculta
     }
-    else if(aleatoria.indexOf(letra)==-1){
-    errores.setCharAt(intentos, letra);
-    JOptionPane.showMessageDialog(null, "Incorrecto, intenta de nuevo");
-    intentos =intentos +1;
+
+    public int Juego() {
+
+        while (intentos < 11 && this.ElegirCategoria().equals(ocultaMod.toString()) == false) {
+            System.out.print("Intenta advinar la palabra. Digite una letra: \r"); // me muestra un mensaje en donde tengo que digitar una palabra
+            letra = sc.next().charAt(0);
+            if (aleatoria.indexOf(letra) >= 0) {
+                JOptionPane.showMessageDialog(null, "Acertaste");// muestra un mensaje de felicitaciones
+                int posicion1 = aleatoria.indexOf(letra);
+                int posicion2 = aleatoria.lastIndexOf(letra);
+                ocultaMod.setCharAt(posicion1, letra);
+                ocultaMod.setCharAt(posicion2, letra);
+            } else if (aleatoria.indexOf(letra) == -1) {
+                errores.setCharAt(intentos, letra);
+                JOptionPane.showMessageDialog(null, "Incorrecto, intenta de nuevo");
+                intentos = intentos + 1;
+            }
+
+        }
+        return intentos;
     }
-    
-     }
-    return intentos;
-    }
-    
-    }              
-    
-    
-    
-    
-    
-    
-    
-    
-    
 
-
-    
-
-    
-
-
+}

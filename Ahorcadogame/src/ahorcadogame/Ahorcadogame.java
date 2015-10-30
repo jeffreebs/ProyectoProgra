@@ -15,8 +15,10 @@ public class Ahorcadogame {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-                  
-        Categorias primercategoria = new Categorias ("superheroes", "partesdelcuerpo", "animales");
+       String[] superheroes;
+         String[] partesdelcuerpo;
+         String[] animales;
+        Categorias primercategoria = new Categorias (superheroes, partesdelcuerpo,animales);
         primercategoria.ObtenerOculta(null);
         primercategoria.Juego();
           
